@@ -43,7 +43,7 @@ function clearErr(id)      { const el = document.getElementById(id); if (el) el.
 function isEmail(v)        { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
 // ── Contact form ──────────────────────────────────────────
-document.getElementById('contact-form').addEventListener('submit', (e) => {
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   let valid = true;
   const name    = document.getElementById('c-name').value.trim();
@@ -56,12 +56,35 @@ document.getElementById('contact-form').addEventListener('submit', (e) => {
   if (message.length < 10) { showErr('c-message-err', 'Message must be at least 10 characters'); valid = false; }
   if (!valid) return;
 
-  showToast('Message Sent!', "Thank you — we'll get back to you soon.");
-  document.getElementById('contact-form').reset();
+  const btn = document.getElementById('c-submit');
+  btn.disabled = true;
+  btn.textContent = 'SENDING...';
+
+  const formData = new FormData(e.target);
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      showToast('Message Sent!', "Thank you — we'll get back to you soon.");
+      document.getElementById('contact-form').reset();
+    } else {
+      showToast('Error', result.message || 'Something went wrong. Please try again.');
+    }
+  } catch (error) {
+    showToast('Error', 'Unable to send message. Please check your connection.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'SEND MESSAGE';
+  }
 });
 
 // ── Prayer form ───────────────────────────────────────────
-document.getElementById('prayer-form').addEventListener('submit', (e) => {
+document.getElementById('prayer-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   let valid = true;
   const isAnon  = document.getElementById('p-anon').checked;
@@ -75,11 +98,39 @@ document.getElementById('prayer-form').addEventListener('submit', (e) => {
   if (request.length < 5)                 { showErr('p-request-err', 'Please describe your request'); valid = false; }
   if (!valid) return;
 
-  showToast('Prayer Request Received', 'Our team will be praying for you.');
-  document.getElementById('prayer-form').reset();
-  anonCheckbox.checked      = false;
-  anonBox.innerHTML         = '';
-  anonBox.style.background  = 'transparent';
-  anonBox.style.borderColor = 'rgba(255,255,255,0.2)';
-  pIdentity.style.display   = '';
+  const btn = document.getElementById('p-submit');
+  btn.disabled = true;
+  btn.textContent = 'SUBMITTING...';
+
+  const formData = new FormData();
+  formData.append('access_key', '840d7ea0-cf12-4e5b-9b8e-ae30fa51f9a9');
+  formData.append('subject', 'New Prayer Request');
+  formData.append('name', isAnon ? 'Anonymous' : (name || 'Anonymous'));
+  formData.append('email', isAnon ? 'anonymous@noemail.com' : (email || 'anonymous@noemail.com'));
+  formData.append('message', request);
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      showToast('Prayer Request Received', 'Our team will be praying for you.');
+      document.getElementById('prayer-form').reset();
+      anonCheckbox.checked      = false;
+      anonBox.innerHTML         = '';
+      anonBox.style.background  = 'transparent';
+      anonBox.style.borderColor = 'rgba(255,255,255,0.2)';
+      pIdentity.style.display   = '';
+    } else {
+      showToast('Error', result.message || 'Something went wrong. Please try again.');
+    }
+  } catch (error) {
+    showToast('Error', 'Unable to submit request. Please check your connection.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'SUBMIT PRAYER REQUEST';
+  }
 });

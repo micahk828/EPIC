@@ -56,6 +56,7 @@ if (socialSelect && socialFields) {
 }
 
 // Form Submission Handler
+// Form Submission Handler
 const rsvpForm = document.getElementById('homecoming-rsvp-form');
 if (rsvpForm) {
   rsvpForm.addEventListener('submit', async (e) => {
@@ -64,19 +65,13 @@ if (rsvpForm) {
     btn.disabled = true;
     btn.textContent = 'Submitting...';
 
-    // Convert Form Data to JSON
+    // Pass FormData directly without JSON conversion or headers
     const formData = new FormData(rsvpForm);
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: json
+        body: formData
       });
       
       const result = await response.json();
@@ -85,11 +80,13 @@ if (rsvpForm) {
         rsvpForm.classList.add('hidden');
         document.getElementById('rsvp-success-message').classList.remove('hidden');
       } else {
+        console.error('Web3Forms Error Response:', result);
         alert(result.message || 'Submission failed. Please try again.');
         btn.disabled = false;
         btn.textContent = 'CONFIRM RSVP';
       }
     } catch (err) {
+      console.error('Network Error:', err);
       alert('Network error. Please try again later.');
       btn.disabled = false;
       btn.textContent = 'CONFIRM RSVP';

@@ -27,3 +27,62 @@ export function showToast(title, message, type = 'success') {
     setTimeout(() => toast.remove(), 300);
   }, 4000);
 }
+
+// ── RSVP Section Toggle & Submission ───────────────────────
+const btnOpenRsvp   = document.getElementById('btn-open-rsvp');
+const btnCloseRsvp  = document.getElementById('btn-close-rsvp');
+const rsvpInfoView  = document.getElementById('rsvp-info-view');
+const rsvpFormView  = document.getElementById('rsvp-form-view');
+const socialSelect  = document.getElementById('social-select');
+const socialFields  = document.getElementById('social-ticket-fields');
+
+if (btnOpenRsvp && btnCloseRsvp) {
+  btnOpenRsvp.addEventListener('click', () => {
+    rsvpInfoView.classList.add('hidden');
+    rsvpFormView.classList.remove('hidden');
+  });
+
+  btnCloseRsvp.addEventListener('click', () => {
+    rsvpFormView.classList.add('hidden');
+    rsvpInfoView.classList.remove('hidden');
+  });
+}
+
+// Toggle Laserbounce ticket inputs if skipping social
+if (socialSelect && socialFields) {
+  socialSelect.addEventListener('change', () => {
+    socialFields.style.display = socialSelect.value === 'Yes' ? 'grid' : 'none';
+  });
+}
+
+// Form Submission Handler
+const rsvpForm = document.getElementById('homecoming-rsvp-form');
+if (rsvpForm) {
+  rsvpForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('rsvp-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(rsvpForm)
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        rsvpForm.classList.add('hidden');
+        document.getElementById('rsvp-success-message').classList.remove('hidden');
+      } else {
+        alert(result.message || 'Submission failed. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'CONFIRM RSVP';
+      }
+    } catch (err) {
+      alert('Network error. Please try again later.');
+      btn.disabled = false;
+      btn.textContent = 'CONFIRM RSVP';
+    }
+  });
+}

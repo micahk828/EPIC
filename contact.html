@@ -248,47 +248,53 @@
               </p>
             </div>
 
-            <form id="prayer-form" class="space-y-6">
-              <!-- Anonymous toggle -->
-              <div class="flex items-start gap-3 p-4 rounded-md" style="border:1px solid rgba(255,255,255,0.05);background:#0A0A0A;">
-                <div style="position:relative;margin-top:2px;">
-                  <input type="checkbox" id="p-anon" style="position:absolute;opacity:0;width:0;height:0;">
-                  <div id="p-anon-box" onclick="document.getElementById('p-anon').click()"
-                       style="width:20px;height:20px;border-radius:4px;border:1px solid rgba(255,255,255,0.2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;">
-                  </div>
-                </div>
-                <div>
-                  <label for="p-anon" class="font-sans font-medium" style="color:#fff;cursor:pointer;display:block;">Submit Anonymously</label>
-                  <p class="font-sans text-sm mt-1" style="color:#a3a3a3;">We won't store your name or email with this request.</p>
-                </div>
-              </div>
+<form action="https://api.web3forms.com/submit" method="POST" id="prayer-form" class="space-y-6">
+  <!-- Web3Forms Access Key -->
+  <input type="hidden" name="access_key" value="840d7ea0-cf12-4e5b-9b8e-ae30fa51f9a9">
+  
+  <!-- Form Subject for email notifications -->
+  <input type="hidden" name="subject" value="New Prayer Request Submitted">
+  
+  <!-- Anonymous toggle -->
+  <div class="flex items-start gap-3 p-4 rounded-md" style="border:1px solid rgba(255,255,255,0.05);background:#0A0A0A;">
+    <div style="position:relative;margin-top:2px;">
+      <input type="checkbox" id="p-anon" style="position:absolute;opacity:0;width:0;height:0;">
+      <div id="p-anon-box" onclick="document.getElementById('p-anon').click()"
+           style="width:20px;height:20px;border-radius:4px;border:1px solid rgba(255,255,255,0.2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+      </div>
+    </div>
+    <div>
+      <label for="p-anon" class="font-sans font-medium" style="color:#fff;cursor:pointer;display:block;">Submit Anonymously</label>
+      <p class="font-sans text-sm mt-1" style="color:#a3a3a3;">We won't store your name or email with this request.</p>
+    </div>
+  </div>
 
-              <div id="p-identity" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label class="form-label" for="p-name">Name (First name is fine)</label>
-                  <input id="p-name" name="name" type="text" placeholder="Your name" class="form-input prayer-focus">
-                  <div class="field-error" id="p-name-err">Name is required</div>
-                </div>
-                <div>
-                  <label class="form-label" for="p-email">Email (Optional)</label>
-                  <input id="p-email" name="email" type="email" placeholder="For follow-up support" class="form-input prayer-focus">
-                  <div class="field-error" id="p-email-err">Please enter a valid email</div>
-                </div>
-              </div>
+  <div id="p-identity" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label class="form-label" for="p-name">Name (First name is fine)</label>
+      <input id="p-name" name="name" type="text" placeholder="Your name" class="form-input prayer-focus">
+      <div class="field-error" id="p-name-err">Name is required</div>
+    </div>
+    <div>
+      <label class="form-label" for="p-email">Email (Optional)</label>
+      <input id="p-email" name="email" type="email" placeholder="For follow-up support" class="form-input prayer-focus">
+      <div class="field-error" id="p-email-err">Please enter a valid email</div>
+    </div>
+  </div>
 
-              <div>
-                <label class="form-label" for="p-request">Your Prayer Request *</label>
-                <textarea id="p-request" name="request" placeholder="How can we pray for you?" class="form-textarea prayer-focus"></textarea>
-                <div class="field-error" id="p-request-err">Prayer request must be at least 5 characters</div>
-              </div>
+  <div>
+    <label class="form-label" for="p-request">Your Prayer Request *</label>
+    <textarea id="p-request" name="message" placeholder="How can we pray for you?" class="form-textarea prayer-focus" required></textarea>
+    <div class="field-error" id="p-request-err">Prayer request must be at least 5 characters</div>
+  </div>
 
-              <button type="submit" id="p-submit"
-                      class="px-10 h-14 rounded-full font-bold font-sans transition-colors"
-                      style="background:#F97316;color:#fff;border:none;cursor:pointer;"
-                      onmouseover="this.style.background='#ea6c10'" onmouseout="this.style.background='#F97316'">
-                SUBMIT PRAYER REQUEST
-              </button>
-            </form>
+  <button type="submit" id="p-submit"
+          class="px-10 h-14 rounded-full font-bold font-sans transition-colors"
+          style="background:#F97316;color:#fff;border:none;cursor:pointer;"
+          onmouseover="this.style.background='#ea6c10'" onmouseout="this.style.background='#F97316'">
+    SUBMIT PRAYER REQUEST
+  </button>
+</form>
           </div>
 
         </div>

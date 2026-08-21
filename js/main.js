@@ -64,11 +64,21 @@ if (rsvpForm) {
     btn.disabled = true;
     btn.textContent = 'Submitting...';
 
+    // Convert Form Data to JSON
+    const formData = new FormData(rsvpForm);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: new FormData(rsvpForm)
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
       });
+      
       const result = await response.json();
 
       if (result.success) {

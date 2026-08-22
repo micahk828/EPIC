@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Web3Forms Fetch Test</title></head>
+<head><meta charset="UTF-8"><title>Web3Forms Full Replica Test</title></head>
 <body>
-  <h1>Fetch Test</h1>
+  <h1>Full Replica Test</h1>
   <form id="test-form">
     <input type="hidden" name="access_key" value="804d7fba-608c-4388-a1b3-c5ed130c6c9d">
-          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-          <input type="hidden" name="subject" value="New RSVP: Homecoming Youth Weekend 2026">
-          <input type="hidden" name="from_name" value="E.P.i.C. Youth Ministry RSVP">
-          <input style="color:black;border-radius:5px;" id="rsvp-name" name="name" type="text" placeholder="First & Last Name" class="form-input" required>
-          <input style="color:black;border-radius:5px;" id="rsvp-email" name="email" type="email" placeholder="email@google.com" class="form-input" required>
-          <input style="color:black;border-radius:5px;" id="rsvp-phone" name="phone" type="tel" placeholder="(123) 456-7890" class="form-input" required>
-          <input style="color:black;border-radius:5px;" id="rsvp-church" name="church" type="text" placeholder="e.g. Beulah COG7" class="form-input" required>
-          <select name="attendance_days" class="form-input" style="background:#0A0A0A; color:#fff;" required>
-              <option value="Friday & Saturday (Sept 25-26)">Friday & Saturday (Sept 25–26)</option>
-              <option value="Saturday Only (Sept 26)">Saturday Only (Sept 26)</option>
-              <option value="Friday Only (Sept 25)">Friday Only (Sept 25)</option>
-          </select>
-          <input style="color:black;border-radius:5px;" id="rsvp-adults-count" name="adult_count" type="number" min="0" value="1" class="form-input">
-          <input style="color:black;border-radius:5px;" id="rsvp-adult-names" name="adult_names" type="text" placeholder="Separate with commas" class="form-input">
-          <input style="color:black;border-radius:5px;" id="rsvp-kids-count" name="child_count" type="number" min="0" value="0" class="form-input">
-          <input style="color:black;border-radius:5px;" id="rsvp-kids-names" name="child_names" type="text" placeholder="Separate with commas" class="form-input">
-          <select id="social-select" name="attending_social" class="form-input" style="background:#0A0A0A; color:#fff;">
-                <option value="Yes">Yes, we will attend</option>
-                <option value="No">No, skipping the social</option>
-          </select>
-          <input style="color:black;border-radius:5px;" id="social-play-tickets" name="social_participant_tickets" type="number" min="0" value="1" class="form-input">
-          <input style="color:black;border-radius:5px;" id="social-chaperones" name="social_chaperone_passes" type="number" min="0" value="0" class="form-input">
-          <button id="rsvp-submit-btn" type="submit" class="px-8 h-12 rounded-full font-bold font-sans" style="background:#D4AF37; color:#0A0A0A;">
-              CONFIRM RSVP
-            </button>
-          </div>
+    <input type="hidden" name="subject" value="New RSVP: Homecoming Youth Weekend 2026">
+    <input type="hidden" name="from_name" value="E.P.i.C. Youth Ministry RSVP">
+
+    <input type="text" name="name" required value="Test User"><br><br>
+    <input type="email" name="email" required value="testuser@gmail.com"><br><br>
+    <input type="text" name="phone" value="5551234567"><br><br>
+    <input type="text" name="church" value="Test Church"><br><br>
+
+    <select name="attendance_days">
+      <option value="Friday & Saturday (Sept 25-26)" selected>Friday & Saturday (Sept 25-26)</option>
+    </select><br><br>
+
+    <input type="number" name="adult_count" value="2"><br><br>
+    <input type="text" name="adult_names" value="Jane Doe,John Doe"><br><br>
+    <input type="number" name="child_count" value="1"><br><br>
+    <input type="text" name="child_names" value="Timmy Doe"><br><br>
+
+    <select name="attending_social">
+      <option value="Yes" selected>Yes</option>
+    </select><br><br>
+
+    <input type="number" name="social_participant_tickets" value="2"><br><br>
+    <input type="number" name="social_chaperone_passes" value="1"><br><br>
+
+    <input type="checkbox" name="botcheck" style="display:none;">
+    <button type="submit" id="btn">Submit</button>
   </form>
   <pre id="result"></pre>
 
